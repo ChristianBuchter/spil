@@ -87,15 +87,26 @@ function resizeGame() {
     gameScaler.style.marginTop = (-newHeight / 2) + 'px';
     gameScaler.style.marginLeft = (-newWidth / 2) + 'px';
 
-    canvas.width = newWidth;
-    canvas.height = newHeight;
+	
+    gameWidth = canvas.width = newWidth;
+    gameHeight = canvas.height = newHeight;
+	
+	
+	/*
+	* Skip. skal hentes først, før det her virker. ellers skal det hackes
+	*/
+	shipWidth = gameWidth/LANES;
+	shipHeight = shipWidth * (Ship1.height / Ship1.width);
+	
+	context.font = shipHeight/5 + "px Verdana";
+	// RØD TEKST
+	context.fillStyle = "#FF0000";
+	//
 };
 
 function initGame(){
 	canvas = document.getElementById("gameField");
 	context = canvas.getContext("2d");
-	resizeGame();
-	
 	Beach = new Image();
 	Beach.src = "Graphics/Beach2.png";
 	Cannon = new Image();
@@ -103,6 +114,10 @@ function initGame(){
 	cannon = new CannonClass();
 	Ship1 = new Image();
 	Ship1.src = "Graphics/Ship1.png";
+	
+	context.textAlign = "left"
+	
+	resizeGame();
 	setInterval(function(){
 	gameloop();
 	}, SEC/FRAMERATE);
@@ -159,7 +174,7 @@ function update(){
 			ship.Dist = 0;
 			ship.Lane = Math.floor(Math.random() * LANES);
 		};
-	ship.y = (ship.Dist/ship.GoalDist)*canvas.height;
+	ship.y = (ship.Dist/ship.GoalDist)*gameHeight;
 	};
 	/* 
 	få cannon.rotation tættere på cannon.Targets[0].angle;
@@ -178,13 +193,14 @@ function update(){
  };
 
 function render(){
-	context.clearRect(0,0, canvas.width, canvas.height);
+	context.clearRect(0,0, gameWidth, gameHeight);
 	// skal laves om til en foreach enemy agtig ting
-	context.drawImage(Beach, 0, canvas.height - canvas.height/5, canvas.width, canvas.height/5);
+	context.drawImage(Beach, 0, gameHeight - gameHeight/5, gameWidth, gameHeight/5);
 	for (var key in Enemies) {
 		let ship = Enemies[key];
-		context.drawImage(ship.image, canvas.width/LANES*ship.Lane, ship.y -(canvas.width/LANES * ship.image.height / ship.image.width), canvas.width/LANES, canvas.width/LANES * ship.image.height / ship.image.width);
+		context.drawImage(ship.image, shipWidth*ship.Lane, ship.y -shipHeight, shipWidth, shipHeight);
+		context.fillText(ship.question[0],shipWidth*ship.Lane,ship.y -shipHeight*0.5,shipWidth);
 	};
 	//lav en Scale Funktion. kannonen scalerer ikke.
-	drawRotatedImage(cannon.image, canvas.width/2, canvas.height*CannonY, cannon.rotation);
+	drawRotatedImage(cannon.image, gameWidth/2, gameHeight*CannonY, cannon.rotation);
 };

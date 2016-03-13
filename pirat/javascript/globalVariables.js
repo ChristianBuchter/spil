@@ -6,13 +6,14 @@ var algebra = ["ADDITION", "SUBSTRACTION", "MULTIPLICATION", "DIVISION", "SQUARE
 
 var ASPECT_RATIO = 9/16;
 var canvas, context;
-		//gameWidth, gameHeight (LEGACY) 
+var gameWidth, gameHeight; // canvas.height og width
 var FRAMERATE = 30;
 var SEC = 1000;
 var LANES = 4;
 
 // Graphics
 var Ship1;
+
 var Beach;
 var Cannon;
 
@@ -25,3 +26,6 @@ var CannonY = 5/6 // *gameheight
 
 // Enemies
 var Enemies = {};
+
+var shipWidth;
+var shipHeight;
