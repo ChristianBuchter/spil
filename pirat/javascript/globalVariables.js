@@ -19,9 +19,15 @@ var Cannon;
 
 // Controls
 var keys = []; //tal = keyCode-48, enter: 13 space=32
+var answer = "";
+
+var ZERO = 48, ONE = 49, TWO = 50, THREE = 51, FOUR = 52,
+	FIVE = 53, SIX = 54, SEVEN = 55, EIGHT = 56, NINE = 57,
+	FIRE = 13, SPACE = 8, CLEARANSWER = 8;
 
 // Player
-var CannonY = 5/6 // *gameheight
+var CannonY = 5/6; // *gameheight
+var GAMEOVER = false;
 
 
 // Enemies
