@@ -10,7 +10,7 @@ var CannonClass = function(){
 	this.image = Cannon;
 	this.Targets = [];
 	this.rotation = 0;
-	this.rotSpeed = 3/180; // tre grader pr. frame
+	this.rotSpeed = (2*Math.PI)/180; // to grader pr. frame
 	this.balls;
 	this.checkTarget = function(){
 		if (answer == ""){return false;}
@@ -128,6 +128,21 @@ function drawRotatedImage(image, x, y, angle) {
 	context.restore(); 
 };
 
+
+function resizeGame() {
+    var newWidth = window.innerWidth;
+    var newHeight = window.innerHeight;
+    var newWidthToHeight = newWidth / newHeight;
+	
+	if (newWidthToHeight > ASPECT_RATIO){
+		newWidth = newHeight * ASPECT_RATIO;
+	}else {
+		newHeight = newWidth / ASPECT_RATIO;
+	}	
+	gameField.style.width = newWidth+'px';
+	gameField.style.height = newHeight+'px';
+}
+/*
 function resizeGame() {
     var newWidth = window.innerWidth;
     var newHeight = window.innerHeight;
@@ -153,7 +168,7 @@ function resizeGame() {
 	
 	/*
 	* Skip. skal hentes først, før det her virker. ellers skal det hackes
-	*/
+	* /
 	shipWidth = gameWidth/LANES;
 	shipHeight = shipWidth * (Ship1.height / Ship1.width);
 	
@@ -163,7 +178,7 @@ function resizeGame() {
 	context.fillStyle = "#FF0000";
 	//
 };
-
+*/
 function initGame(){
 	canvas = document.getElementById("gameField");
 	context = canvas.getContext("2d");
@@ -173,6 +188,15 @@ function initGame(){
 	Cannon.src = "Graphics/Cannon.png";
 	cannon = new CannonClass();
 	Ship1 = new Image();
+	Ship1.onload = function(){
+			shipWidth = gameWidth/LANES;
+	shipHeight = shipWidth * (Ship1.height / Ship1.width);
+	
+	context.font = shipHeight/5 + "px Verdana";
+	context.textAlign = "center";
+	// RØD TEKST
+	context.fillStyle = "#FF0000";
+	};
 	Ship1.src = "Graphics/Ship1.png";
 	
 	resizeGame();
@@ -218,11 +242,10 @@ window.addEventListener("keyup", function(key){
 // Gameloop
 
 function takeAim(target){
-	cannon.rotation = cannon.rotation + Math.sign(angleTo(target)) * Math.min(cannon.rotSpeed, Math.abs(angleTo(target) - cannon.rotation));
+	cannon.rotation = cannon.rotation + Math.sign(angleTo(target)-cannon.rotation) * Math.min(cannon.rotSpeed, Math.abs(angleTo(target) - cannon.rotation));
 	if(cannon.rotation == angleTo(target)){
 		cannon.fire(); // canon fire skal nok kopiere nogle oplysninger fra målskibet til en cannon.balls liste.
 	}
-	console.log("angleTo(" + cannon.Targets[0] + "): " + angleTo(target) + " cannon.rotation: " +cannon.rotation )
 }
 
 function gameloop(){
