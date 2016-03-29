@@ -24,6 +24,7 @@ var ZERO = 48, ONE = 49, TWO = 50, THREE = 51, FOUR = 52,
 	FIRE = 13, SPACE = 8, CLEARANSWER = 8;
 
 // Player
+var cannon;
 var CannonY = 5/6; // *gameheight
 var GAMEOVER = false;
 

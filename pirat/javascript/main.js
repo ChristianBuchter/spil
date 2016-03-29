@@ -1,3 +1,5 @@
+"use strict";
+
 // Game Field
 
 document.ontouchmove = function(e){
@@ -5,7 +7,7 @@ document.ontouchmove = function(e){
 };
 
 var CannonClass = function(){
-	_this = this;
+	var _this = this;
 	
 	this.image = Cannon;
 	this.Targets = [];
@@ -58,7 +60,7 @@ var CannonClass = function(){
 };
 
 var Enemy = function(){
-	_this = this;
+	var _this = this;
 	
 	this.image = Ship1; 
 	this.y = 0;
@@ -67,6 +69,8 @@ var Enemy = function(){
 	this.Lane = Math.floor(Math.random() * LANES) // måske argument 
 	
 	this.question = generateAlgebra();
+	this.questionImg = new Image();
+	this.questionImg.src = "http://chart.apis.google.com/chart?cht=tx&chl="+ _this.question[0] +"&chf=bg%2Cs%2CFFFFFF00&chco=FF0000"
 	this.sink = function(){
 		_this.hit = true;
 		//impliment here
@@ -290,7 +294,7 @@ function render(){
 	for (var key in Enemies) {
 		let ship = Enemies[key];
 		context.drawImage(ship.image, shipWidth*ship.Lane, ship.y -shipHeight, shipWidth, shipHeight);
-		context.fillText(ship.question[0],(shipWidth/2)+shipWidth*ship.Lane,ship.y -shipHeight*0.5,shipWidth);
+		context.drawImage(ship.questionImg,shipWidth*ship.Lane + shipWidth/2 - ship.questionImg.width/2,ship.y -shipHeight/2 - ship.questionImg.height/2,Math.min(ship.questionImg.width, shipWidth), ship.questionImg.height);
 	};
 	//lav en Scale Funktion. kannonen scalerer ikke.
 	drawRotatedImage(cannon.image, gameWidth/2, gameHeight*CannonY, cannon.rotation);

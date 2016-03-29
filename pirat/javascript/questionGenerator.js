@@ -17,30 +17,30 @@ var generateAlgebra = function(){
 	switch(questionType) {
 		case "ADDITION": //plus
 			result = op1 + op2;
-			task = op1 + " + " + op2;
+			task = op1 + "%2B" + op2 + "&chs=60";
 			break;
 
 		case "SUBSTRACTION": //minus
 			result = Math.max(op1, op2) - Math.min(op1, op2);
-			task = Math.max(op1, op2) + " - " + Math.min(op1, op2);
+			task = Math.max(op1, op2) + "-" + Math.min(op1, op2)+ "&chs=60";
 			break;
 
 		case "MULTIPLICATION": //gange (lav lige en smart f- finder)
 			result = op1 * op2;
-			task = op1 + " * " + op2;
+			task = op1 + "\\cdot" + op2+ "&chs=60";
 			break;
 
 		case "DIVISION": //divider
 			op1 = random(10) +1;
 			result = random(11);
 			op2 = op1 * result;
-			task = op2 + " / " + op1;
+			task = "\\frac{" + op2 + "}{" + op1 + "}&chs=140";
 			break;
 			
 		case "SQUAREROOT": //divider
 			result = random(11);
 			op1 = result * result;
-			task = "sqrt("+ op1+ ")" ;
+			task = "\\sqrt{"+ op1+ "}&chs=95" ;
 			break;
 		}
 return [task, result]
